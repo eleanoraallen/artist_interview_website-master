@@ -1,0 +1,85 @@
+#contentContainer {
+    padding-top: 90px;
+    padding-bottom: 90px;
+    display: flex;
+    justify-content: center;
+  }
+
+  #contactTextContainer {
+      text-align: left;
+      font-size: 14pt;
+      line-height: 1.3;
+      width: 700px;
+  }
+  .contactTitle {
+      font-size: 16pt;
+  }
+
+  .subscribeContainer {
+  }
+
+  #subscribeForm {
+    padding-top: 50px;
+    justify-content: center;
+  }
+
+  #tlemail {
+    background-color: rgb(238, 238, 238);
+    width: 350px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    padding-left: 10px;
+    border: hidden;
+    outline: none;
+    text-align: left;
+    font-family: 'IngramMono-Regular', Helvetica, Arial, Sans-Serif;
+    color: black;
+    font-size: 14pt;
+  }
+
+  #submit {
+    font-family: 'IngramMono-Regular', Helvetica, Arial, Sans-Serif;
+    background-color: rgb(238, 238, 238);
+    padding-top: 5px;
+    padding-bottom: 5px;
+    padding-left: 15px;
+    padding-right: 15px;
+    font-size: 11pt;
+    outline: none;
+    border: none;
+  }
+
+  #submit:hover {
+    background-color: rgb(228, 228, 228);
+  }
+
+  /* Tablet/Mobile Style */
+@media screen and (max-width: 768px) {
+
+  #contentContainer {
+      padding-top: 60px;
+  }
+
+  #contactTextContainer {
+    font-size: 11pt;
+    width: 90%;
+  }
+  .contactTitle {
+      font-size: 13pt;
+  }
+
+  #subscribeForm {
+    padding-top: 40px;
+  }
+
+  #tlemail {
+    background-color: rgb(238, 238, 238);
+    max-width: 80%;
+    padding-left: 7px;
+    font-size: 11pt;
+  }
+
+  #submit {
+    font-size: 11pt;
+  }
+}

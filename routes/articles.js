@@ -1,0 +1,88 @@
+const express = require('express');
+const Article = require('./../models/article');
+const router = express.Router();
+
+
+
+
+router.get('/contact', (req, res) => {
+    res.render('articles/contact', { article: new Article() })
+});
+
+router.get('/about', (req, res) => {
+    res.render('articles/about', { article: new Article() })
+});
+
+router.get('/new', (req, res) => {
+    res.render('articles/new', { article: new Article() })
+});
+
+router.get('/edit/:id', async (req, res) => {
+    const article = await Article.findById(req.params.id);
+    res.render('articles/edit', { article: article });
+});
+
+
+
+router.get('/:slug', async (req, res) =>{
+    try {
+        const article = await Article.findOne({ slug: req.params.slug });
+        
+        if (article == null) res.redirect('/');
+
+        res.render('articles/show', { article: article });
+        
+    } catch (error) {
+        console.log('Couldnt find article' + error);
+        res.redirect('/');
+    }
+});
+
+router.post('/', async (req, res, next) => {
+   req.article = new Article();
+   next();
+
+    
+}, saveArticleAndRedirect('new'));
+
+router.put('/:id', async (req, res, next) => {
+    req.article = await Article.findById(req.params.id);
+    next();
+     
+ }, saveArticleAndRedirect('edit'));
+
+
+
+router.delete('/:id', async (req, res) => {
+    await Article.findByIdAndDelete(req.params.id);
+    res.redirect('/');
+})
+
+function saveArticleAndRedirect(path) {
+    return async (req, res) => {
+        let article = req.article;
+        console.log("printing post body");
+        console.log(req.body);
+        article.title = req.body.title;
+        article.artist = req.body.artist;
+        article.interviewer = req.body.interviewer;
+        article.thumbnail = req.body.thumbnail;
+        article.caption = req.body.caption;
+        article.description = req.body.description;
+        article.pageHtml = req.body.pageHtml;
+        article.tags = req.body.tags;
+        article.content =  req.body['content[]'] ? req.body['content[]'] : [];
+        article.types = req.body['type[]'] ? req.body['type[]'] : [];
+        
+        try {
+            article.markModified('content');
+            article = await article.save();
+            res.redirect(`/articles/${article.slug}`);
+        } catch (err) {
+            console.log("Post Errorr:" + err);
+            res.render(`articles/${path}`, { article: article });
+        }
+    }
+}
+
+module.exports = router;

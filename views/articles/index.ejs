@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<title>/ Variables</title>
+		<link rel="stylesheet" href="../css/webfonts/ingram-mono-regular.css" type="text/css" charset="utf-8" />
+		<link rel="stylesheet" type="text/css" href="/css/style.css" />
+		<link rel="stylesheet" type="text/css" href="/css/index.css" />
+	</head>
+	<body>
+        <div class="pageContent">
+            <a id='skipLink' href='#contentContainer'>Jump to main</a>
+            <div class="header">
+                <div class="logoContainer"><a href="/articles/index" class="logoLink">/ Variables</a></div>
+                <div class="navContainer" role="navigation">
+                    <nav>
+                        <a class="navLink" href="/articles/about">About</a>
+                        <a class="navLink" href="/articles/archive">Archive</a>
+                        <a class="navLink" href="/articles/contact">Contact</a>
+                        <a class="navLink" href="/articles/new" >Admin</a>
+                    </nav>
+                </div>
+                <div class="spaceDiv"></div>
+            </div>
+            <div id="contentContainer" role="main">
+                <% articles.slice(0,3).forEach(article => { %>
+                    <div class="homePreview">
+                        <div class="homePreviewArtist"><%= article.artist %></div>
+                        <div class="homePreviewInterviewer">with <%= article.interviewer %></div>
+                        <div class="homePreviewImageContainer">
+                            <img src="<%= article.thumbnail %>" alt="thumbnail not found"  class="homePreviewImage">
+                        </div>
+                        <div class="homeImageTitle"><%= article.caption %></div>
+                        <div class="homePreviewDescriptionContainer">
+                            <div class="homePreviewDescription"><%= article.description %></div>
+                        </div>
+                        <div class="previewLinkContainer">
+                            <a class="homePreviewLink" href="articles/<%= article.slug %>">read »</a>
+                        </div>
+                    </div>
+                    <div class="homeDivider"></div>
+                <% }); %> 
+            </div>
+            <div class="footerContainer">
+                <div class="footer">
+                    <div class="footerLogoContainer"><a href="/articles/index" class="logoLink">/</a></div>	
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

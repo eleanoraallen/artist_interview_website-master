@@ -1,0 +1,158 @@
+#adminTitle {
+    font-size: 20pt;
+    color: rgb(158, 158, 158);
+}
+
+.inputBar {
+    background-color: rgb(238, 238, 238);
+    width: 400px;
+    height: 40px;
+    border: hidden;
+    outline: none;
+    text-align: center;
+    font-family: 'IngramMono-Regular', Helvetica, Arial, Sans-Serif;
+    color: black;
+    font-size: 13pt;
+  }
+
+.elementContainer {
+    padding-top: 50px;
+    display: flex;
+    justify-content: center;
+}
+
+#previewImageSource {
+    width: 700px;
+}
+
+.inputField {
+    background-color: rgb(238, 238, 238);
+    width: 695px;
+    height: 195px;
+    resize: none;
+    padding-left: 5px;
+    padding-top: 5px;
+    border: hidden;
+    outline: none;
+    text-align: left;
+    vertical-align: top;
+    font-family: 'IngramMono-Regular', Helvetica, Arial, Sans-Serif;
+    color: black;
+    font-size: 13pt;
+}
+
+.adminSeperator {
+    margin-top: 50px;
+    width: 70%;
+    height: 3px;
+    margin-left: 15%;
+    background-color: rgb(238, 238, 238);
+}
+
+.adminButton {
+    font-family: 'IngramMono-Regular', Helvetica, Arial, Sans-Serif;
+    background-color: rgb(238, 238, 238);
+    padding-top: 5px;
+    padding-bottom: 5px;
+    padding-left: 15px;
+    padding-right: 15px;
+    font-size: 14pt;
+    outline: none;
+    border: none;
+  }
+
+  #interviewContainer {
+      flex-direction: column;
+  }
+
+  .artistField {
+      font-family: 'Times New Roman', Times, serif;
+  }
+
+  .interviewerField {
+    font-family: 'Times New Roman', Times, serif;
+    font-style: italic;
+}
+
+.mediaInputContainer {
+    display: flex;
+    flex-direction: column;
+}
+
+.srcInput {
+    margin-bottom: 10px;
+    margin-right: 10px;
+    width: 690px;
+}
+.captionInput {
+    margin-bottom: 10px;
+    margin-right: 10px;
+    width: 690px;
+}
+
+.altInput {
+    margin-right: 10px;
+    width: 690px;
+}
+
+.embedField {
+    margin-bottom: 10px;
+    margin-right: 10px;
+    width: 690px !important;
+}
+
+.embedInput {
+  width: 695px;
+}
+
+  .interviewButton {
+      width: 275px;
+  }
+
+  .interviewButtonContainer {
+      justify-content: space-evenly;
+  }
+  
+  .adminButton:hover {
+    background-color: rgb(228, 228, 228);
+  }
+
+  #tagContainer {
+      flex-direction: column;
+  }
+
+  .removeButton {
+    font-family: 'IngramMono-Regular', Helvetica, Arial, Sans-Serif;
+    background-color: rgb(223, 105, 105);
+    padding-top: 5px;
+    padding-bottom: 5px;
+    padding-left: 15px;
+    padding-right: 15px;
+    font-size: 14pt;
+    outline: none;
+    border: none;
+  }
+
+  .removeButton:hover {
+    background-color: rgb(197, 51, 51);
+  }
+
+  #endButtonContainer {
+      justify-content: space-evenly;
+      padding-bottom: 90px;
+  }
+
+  #previewButton {
+      background-color: gold;
+  }
+
+  #previewButton:Hover {
+    background-color: rgb(238, 202, 0);
+}
+
+  #publishButton {
+    background-color: rgb(61, 150, 61);  
+}
+#publishButton:hover {
+    background-color: rgb(34, 104, 34);  
+}

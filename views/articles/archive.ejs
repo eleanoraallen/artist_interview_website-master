@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<title>/ Variables</title>
+		<link rel="stylesheet" href="../css/webfonts/ingram-mono-regular.css" type="text/css" charset="utf-8" />
+		<link rel="stylesheet" type="text/css" href="/css/style.css" />
+		<link rel="stylesheet" type="text/css" href="/css/archive.css" />
+	</head>
+	<body>
+        <div class="pageContent">
+            <a id='skipLink' href='#contentContainer'>Jump to main</a>
+            <div class="header">
+                <div class="logoContainer"><a href="/articles/index" class="logoLink">/ Variables</a></div>
+                <div class="navContainer" role="navigation">
+                    <nav>
+                        <a class="navLink" href="/articles/about">About</a>
+                        <a class="navLink" href="/articles/archive">Archive</a>
+                        <a class="navLink" href="/articles/contact">Contact</a>
+                    </nav>
+                </div>
+                <div class="spaceDiv"></div>
+            </div>
+            <div id="searchContainer">
+				<input id="searchBar" type="search" placeholder="search interviews">
+			</div>
+			<div class="sortContainer">
+				<div class="sortButtonContainer">
+					<button class="sortButton" id="dateButton">Date ▼</button>
+				</div>
+				<div class="sortButtonContainer">
+					<button class="sortButton" id="artistButton">Artist ▼</button>
+				</div>
+				<div class="sortButtonContainer">
+					<button class="sortButton" id="interviewerButton">Interviewer ▼</button>
+				</div>
+			</div>
+			<main>
+				<div id="contentContainer" role="main">
+                    <% articles.slice(0,3).forEach(article => { %>
+                        <div class="homePreview">
+                            <div class="homePreviewArtist"><%= article.artist %></div>
+                            <div class="homePreviewInterviewer">with <%= article.interviewer %></div>
+                            <div class="homePreviewImageContainer">
+                                <img src="<%= article.thumbnail %>" alt="thumbnail not found"  class="homePreviewImage">
+                            </div>
+                            <div class="homeImageTitle"><%= article.caption %></div>
+                            <div class="homePreviewDescriptionContainer">
+                                <div class="homePreviewDescription"><%= article.description %></div>
+                            </div>
+                            <div class="previewLinkContainer">
+                                <a class="homePreviewLink" href="articles/<%= article.slug %>">read »</a>
+                            </div>
+                        </div>
+                        <div class="homeDivider"></div>
+                    <% }); %> 
+				</div>
+			</main>
+			<div class="footer">
+				<div class="footerLogoContainer"><a href="index.html" class="logoLink">/</a></div>	
+			</div>
+		</div>
+        <script>
+            
+            // TODO FIX ME PLEASE!
+            // let a = articles;
+
+            // search string
+            let searchString = "";
+
+            // priview array
+            let previews = [];
+
+            // Sorted BY
+            let sortBy = 'date';
+
+            // represents a preview of an interview
+            class Preview {
+                constructor(data, visible) {
+                this.artist = data.artist;
+                this.interviewer = data.interviewer;
+                this.date = data.createdAt;
+                this.imageUrl = data.thumbnail;
+                this.url = "articles/" + data.slug;
+                this.tags = data.tags.split("~~~");
+                this.visible = visible;
+                }
+            }
+
+            // Event Handlers -----------------------------------------------------------------
+
+            /**
+             * sorts previews according to Date and updates the page
+             * @param event<click> onClick event
+             */
+            function sortDate(event) {
+                sortBy = 'date';
+                previews = sortPreviews(previews);
+                writePreviews();
+            }
+            // add event listener
+            document.getElementById("dateButton").addEventListener("click", sortDate);
+
+            /**
+             * sorts previews according to artist and updates the page
+             * @param event<click> onClick event
+             */
+            function sortArtist(event) {
+                sortBy = 'artist';
+                previews = sortPreviews(previews);
+                writePreviews();
+            }
+            // add event listener
+            document.getElementById("artistButton").addEventListener("click", sortArtist);
+
+            /**
+             * sorts previews according to interviewer and updates the page
+             * @param event<click> onClick event
+             */
+            function sortInterviewer(event) {
+                sortBy = 'interviewer';
+                previews = sortPreviews(previews);
+                writePreviews();
+            }
+            // add event listener
+            document.getElementById("interviewerButton").addEventListener("click", sortInterviewer);
+
+            /**
+             * updates previews according to search parameters
+             * @param event<input> searchbar's content
+             */
+            function handleSearch(event) {
+                searchString = event.target.value.trim();
+                previews.forEach(p => p.visible = shouldShowPreview(p));
+                writePreviews();
+            }
+            // add event listener 
+            document.getElementById("searchBar").addEventListener("input", handleSearch);
+
+            // communication w/ backend -----------------------------------------------------
+
+            /**
+             * WILL: loads all previews from the server
+             * ACTUALY DOES: loads fake previews for testing
+             */
+            function loadPreviews() {
+                previews = sortPreviews(a.map(p => makePreview(p)));
+                writePreviews()
+                // fetch(url)
+                //     .then(res => res.json())
+                //     .then(data => {
+                //        previews = sortPreviews(data.previews.map(p => makePreview(p)));
+                //         writePreviews();
+                //     }).catch(err => {
+                //         console.log(err)
+                //     });
+            }
+
+            // helper functions -------------------------------------------------------------
+
+            /**
+             * makes a Preview from the data recieved from the server
+             * 
+             * @param p<JSON> JSON representing the preview's data
+             * 
+             * @return<Preview> the Preview
+             */
+            function makePreview(p) {
+                return new Preview(p, shouldShowPreview(p));
+            }
+
+            /**
+             * true iff a preview should be visible (is included in the search parameters)
+             * 
+             * @param p<Preview> the preview to be tested
+             * 
+             * @return<Boolean> true iff should be visible
+             */
+            function shouldShowPreview(p) {
+                let show = searchString == "";
+                show = show || p.interviewer.includes(searchString);
+                show = show || p.artist.includes(searchString);
+                p.tags.forEach(t => show = show || t.includes(searchString));
+                return show;
+            }
+
+            /**
+             * sorts an array of previews according to sortBy
+             * 
+             * @param l<[Preview]> the previews to be sorted
+             * 
+             * @return<[Preview]> the sorted array
+             */
+            function sortPreviews(l) {
+                let compare = (x, y) => new Date(y.date) - new Date(x.date);
+                if (sortBy == 'artist') {
+                    compare = (x, y) => {
+                        if (x.artist < y.artist) { 
+                            return -1;
+                        } else { 
+                            return 1;
+                        }
+                    };
+                }
+                if (sortBy == 'interviewer') {
+                    compare = (x, y) => {
+                        if (x.interviewer < y.interviewer) { 
+                            return -1;
+                        } else { 
+                            return 1;
+                        }
+                    };
+                } 
+                return l.sort(compare);
+            }
+
+            /**
+             * writes previews to the document
+             */
+            function writePreviews() {
+                const conetentContainer = document.getElementById('contentContainer');
+                while (conetentContainer.firstChild) {
+                    conetentContainer.removeChild(conetentContainer.firstChild);
+                }
+                previews.forEach(p => conetentContainer.appendChild(formatPreview(p)));
+            }
+
+            /**
+             * returns a preview as a DOM element
+             * 
+             * @param p<Preview> a Preview 
+             * 
+             * @return<<div>...</div>> the given preview as a DOM element
+             */
+            function formatPreview(p) {
+                let preview = document.createElement("div");
+                
+                // set preview visibility
+                if (p.visible) {
+                    preview.className = "visiblePreview";
+                } else {
+                    preview.className = "invisiblePreview";
+                }
+
+                // container for the preview image
+                let imageContainer = document.createElement('div');
+                imageContainer.className = "previewImageContainer";
+
+                // preview image
+                let l = document.createElement("a");
+                l.href = p.url;
+                let image = document.createElement("img");
+                image.setAttribute('src', p.imageUrl);
+                image.setAttribute('alt', 'preview image for article');
+                image.className = "previewImage";
+                l.appendChild(image);
+                imageContainer.appendChild(l);
+                preview.appendChild(imageContainer);
+
+                // container for the preview's textual content
+                let previewContent = document.createElement('div');
+                previewContent.className = "previewContent";
+
+                // the artist
+                let previewArtist = document.createElement('div');
+                previewArtist.className = "previewArtist";
+                previewArtist.innerHTML = p.artist;
+                previewContent.appendChild(previewArtist);
+
+                // the interviewer
+                let previewInterviewer = document.createElement('div');
+                previewInterviewer.className = "previewInterviewer";
+                previewInterviewer.innerHTML = p.interviewer;
+                previewContent.appendChild(previewInterviewer);
+
+                // the date
+                let date = document.createElement('div');
+                date.className = "previewDate";
+                date.innerHTML = moment(p.date).format('MMM Do, YYYY');
+                previewContent.appendChild(date);
+
+                // button linking to the full interview
+                let previewLinkContainer = document.createElement('div');
+                previewLinkContainer.className = "previewLinkContainer";
+                let previewLink = document.createElement('a');
+                previewLink.className = "previewLink";
+                previewLink.href = p.url;
+                previewLink.innerHTML = "read »";
+                previewLinkContainer.appendChild(previewLink);
+                previewContent.appendChild(previewLinkContainer);
+
+                // append previewContent to preview and return that preview
+                let previewContentContainer = document.createElement('div');
+                previewContentContainer.className = "previewContentContainer";
+                previewContentContainer.appendChild(previewContent);
+                preview.appendChild(previewContentContainer);
+
+                let previewContainer = document.createElement('div');
+                previewContainer.className = "previewContainer";
+                previewContainer.appendChild(preview);
+                return previewContainer;
+            }
+
+            // loads previews when page is opened
+            loadPreviews();
+        </script>
+    </body>
+</html>

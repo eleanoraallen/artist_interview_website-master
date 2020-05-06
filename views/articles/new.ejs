@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<title>Create Interview</title>
+		<link rel="stylesheet" href="/css/webfonts/ingram-mono-regular.css" type="text/css" charset="utf-8" />
+		<link rel="stylesheet" type="text/css" href="/css/style.css" />
+		<link rel="stylesheet" type="text/css" href="/css/admin.css" />
+	</head>
+	<body>
+		<a id='skipLink' href='#contentContainer'>Jump to main</a>
+		<div class=pageContent>
+			<div class="header">
+				<div class="logoContainer"><a href="/articles/index" class="logoLink">/ Variables</a></div>
+				<div class="navContainer" role="navigation">
+					<nav>
+						<a class="navLink currentNavLink" href="/articles/about">About</a>
+						<a class="navLink" href="/articles/archive">Archive</a>
+						<a class="navLink" href="/articles/contact">Contact</a>
+					</nav>
+				</div>
+				<div class="spaceDiv"></div>
+			</div>
+    <div id="contentContainer" role="main">
+        <div id="adminTitle" class="elementContainer">Create an Interview</div>
+        <div class="adminSeperator"></div>
+        <div id="basicInfoContainer">
+            <div id="artistContainer" class="elementContainer">
+                <input class="inputBar" id="artistInput" type="text" placeholder="add artist">
+            </div> 
+            <div id="interviewerContainer" class="elementContainer">
+                <input class="inputBar" id="interviewerInput" type="text" placeholder="add interviewer">
+            </div>
+            <div id="previewImageSourceContainer" class="elementContainer">
+                <input class="inputBar" id="previewImageSource" type="url" placeholder="add primary image url">
+            </div>
+            <div id="previewImageCaptionContainer" class="elementContainer">
+                <input class="inputBar" id="previewImageCaption" type="text" placeholder="add primary image caption">
+            </div>
+            <div id="previewImageAltContainer" class="elementContainer">
+                <input class="inputBar" id="previewImageAlt" type="text" placeholder="add primary image alternant text">
+            </div>
+            <div id="descriptionContainer" class="elementContainer">
+                <textarea class="inputField" id="descriptionInput" type="text" placeholder="add interview description"></textarea>
+            </div>
+        </div>
+        <div class="adminSeperator"></div>
+        <div id="interviewContainer" class="elementContainer"> 
+        </div>
+        <div class="elementContainer interviewButtonContainer">
+            <button class="adminButton interviewButton" id="addInterviewerButton" onclick="addInterviewer()">Add Interviewer Text</button>
+            <button class="adminButton interviewButton" id="addArtestButton" onclick="addArtist()">Add Artist Text</button>
+            <button class="adminButton interviewButton" id="addImageButton" onclick="addImage()">Add Image</button>
+        </div>
+        <div class="elementContainer interviewButtonContainer">
+            <button class="adminButton interviewButton" id="addAudioButton" onclick="addAudio()">Add Audio</button>
+            <button class="adminButton interviewButton" id="addVideoButton" onclick="addVideo()">Add Video</button>
+            <button class="adminButton interviewButton" id="addEmbedButton" onclick="addEmbed()">Embed HTML</button>
+        </div>
+        <div class="adminSeperator"></div>
+        <div id="tagContainer" class="elementContainer">
+        </div>
+        <div id="tagButtonContainer" class="elementContainer">
+            <button class="adminButton" id="addTagButton" onclick="addTag()">Add Tag</button>
+        </div>
+        <div class="adminSeperator"></div>
+        <div id="endButtonContainer" class="elementContainer">
+            <button class="adminButton" id="previewButton" onclick="showPreview()">Preview</button>
+            <div class="container">
+                <form id="submitForm" action="/articles" method="POST">
+                    <div class="form-group invisible">
+                        <input required value="<%= article.artist  %>"
+                        type="text" name="artist" id="artist"
+                        class="form-control">
+                    </div>
+                    <div class="form-group invisible">
+                        <input required value="<%= article.interviewer  %>"
+                        type="text" name="interviewer" id="interviewer"
+                        class="form-control">
+                    </div>
+                    <div class="form-group invisible">
+                        <input required value="<%= article.description  %>"
+                        type="text" name="description" id="description"
+                        class="form-control">
+                    </div>
+                    <div class="form-group invisible">
+                        <input required value="<%= article.thumbnail  %>"
+                        type="text" name="thumbnail" id="thumbnail"
+                        class="form-control" placeholder="Enter image link here">
+                    </div>
+                    <div class="form-group invisible">
+                        <input required value="<%= article.caption  %>"
+                        type="text" name="caption" id="caption"
+                        class="form-control" placeholder="Enter caption">
+                    </div>
+                    <div class="form-group invisible">
+                        <input value="<%= article.tags  %>"
+                        type="text" name="tags" id="tags"
+                        class="form-control" placeholder="Enter tags">
+                    </div>
+                    <div class="form-group invisible">
+                        <input required value="<%= article.pageHtml  %>"
+                        type="text" name="pageHtml" id="pageHtml"
+                        class="form-control" placeholder="pagehtml">
+                    </div>
+                    <div class="form-group invisible">
+                        <ul class="list-group" id="contentList">
+                        </ul>
+                    </div>
+                    <a href="/" class="btn btn-secondary invisible">Cancel</a>
+                    <button type="submit" id="publishButton" class="adminButton" onclick="publish()" class="btn btn-primary">Publish</button>
+                </form>
+                <div class="">
+                    <div class="form-group invisible">
+                        <button id="addQuestion" class="btn btn-success">Add Question</button> 
+                        <button id="addText" class="btn btn-success">Add Answer</button> 
+                        
+                        <button id="addImage" type="submit"  class="btn btn-info">Add Image</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    
+    <script
+    src="https://code.jquery.com/jquery-3.2.1.min.js"
+    integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+    crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
+
+    <script src="/js/new.js"></script>
+    <script>
+        let text;
+        let type;
+        let dict;
+        <% for(let i = 0; i < article.content.length; i++) { %>
+            text = "<%= article.content[i]  %>";
+            type = "<%= article.types[i] %>";
+            dict = {};
+            dict.text = text;
+            if (type === 'markdown'){
+                dict.html = getMarkdownHtml(text);
+            } else if(type === 'question') {
+                dict.html = getQuestionHtml(text);
+            } else {
+                dict.html = getImageHtml(text);
+            }
+            contentArr.push(dict);
+            typeArr.push(type);
+        <% } %> 
+    saveContent();
+    outputContent();
+    </script>
+</body>
+</html>
