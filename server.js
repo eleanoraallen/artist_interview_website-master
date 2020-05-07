@@ -2,6 +2,15 @@ const express = require('express');
 const articleRouter = require('./routes/articles');
 const methodOverride = require('method-override');
 
+const initializePassport = require('./passport-config')
+const bcrypt = require('bcrypt')
+const passport = require('passport')
+const flash = require('express-flash')
+const session = require('express-session')
+
+
+
+
 const app = express();
 
 //********** DATABASE CODE ***********/
@@ -41,6 +50,17 @@ process.on('SIGINT', function() {
 //********** DATABASE CODE ENDS ***********/
 
 
+
+
+
+app.use(flash())
+app.use(session({
+  secret: '1234', // process.env.SESSION_SECRET
+  resave: false,
+  saveUninitialized: false
+}))
+app.use(passport.initialize())
+app.use(passport.session())
 
 app.set('view engine', 'ejs');
 
