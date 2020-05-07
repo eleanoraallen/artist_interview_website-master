@@ -103,11 +103,6 @@ router.get('/new', (req, res) => {
     res.render('articles/new', { article: new Article() })
 });
 
-router.get('/edit/:id', async (req, res) => {
-    const article = await Article.findById(req.params.id);
-    res.render('articles/edit', { article: article });
-});
-
 router.get('/archive', async (req, res) => {
     const articles = await Article.find().sort({
         createdAt: 'desc'
@@ -149,7 +144,7 @@ router.put('/:id', async (req, res, next) => {
     req.article = await Article.findById(req.params.id);
     next();
      
- }, saveArticleAndRedirect('edit'));
+ }, saveArticleAndRedirect('/'));
 
 
 
