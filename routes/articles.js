@@ -2,7 +2,13 @@ const express = require('express');
 const Article = require('./../models/article');
 const router = express.Router();
 
-
+router.get('/', async (req, res) => {
+    console.log('index is rendered')
+    const articles = await Article.find().sort({
+        createdAt: 'desc'
+    });
+    res.render('articles/index', { articles });
+});
 
 
 router.get('/contact', (req, res) => {
@@ -20,6 +26,13 @@ router.get('/new', (req, res) => {
 router.get('/edit/:id', async (req, res) => {
     const article = await Article.findById(req.params.id);
     res.render('articles/edit', { article: article });
+});
+
+router.get('/archive', async (req, res) => {
+    const articles = await Article.find().sort({
+        createdAt: 'desc'
+    });
+    res.render('articles/archive', { articles });
 });
 
 
@@ -84,5 +97,8 @@ function saveArticleAndRedirect(path) {
         }
     }
 }
+
+
+
 
 module.exports = router;
