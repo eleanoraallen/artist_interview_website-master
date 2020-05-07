@@ -52,10 +52,6 @@ document.getElementById("addImage").addEventListener("click", function(event) {
     outputContent();
 });
 
-function f() {
-    document.getElementById('pageHtml').value = "<h1>get served motherfucker you deserve to die</h1>";
-}
-
 function saveContent(){
     let inputList = contentList.getElementsByClassName('form-control');
 

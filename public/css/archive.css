@@ -63,7 +63,7 @@
 .visiblePreview {
   display: flex;
   flex-direction: row;
-  width: 900px;
+  width: fit-content;
   max-width: 95%;
   padding-bottom: 90px;
 }
@@ -87,14 +87,17 @@
 
 .previewArtist {
   padding-right: 5vw;
+  width: 150px;
 }
 
 .previewInterviewer {
   padding-right: 5vw;
+  width: 150px;
 }
 
 .previewDate {
   padding-right: 5vw;
+  width: 150px;
 }
 
 .previewLink {
@@ -108,7 +111,7 @@
 }
 
   /* Tablet/Mobile Style */
-  @media screen and (max-width: 768px) {
+  @media screen and (max-width: 800px) {
 
     #contentContainer {
       margin-bottom: 40px;

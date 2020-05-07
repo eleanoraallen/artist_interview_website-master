@@ -37,22 +37,26 @@
 			</div>
 			<main>
 				<div id="contentContainer" role="main">
-                    <% articles.slice(0,3).forEach(article => { %>
-                        <div class="homePreview">
-                            <div class="homePreviewArtist"><%= article.artist %></div>
-                            <div class="homePreviewInterviewer">with <%= article.interviewer %></div>
-                            <div class="homePreviewImageContainer">
-                                <img src="<%= article.thumbnail %>" alt="thumbnail not found"  class="homePreviewImage">
-                            </div>
-                            <div class="homeImageTitle"><%= article.caption %></div>
-                            <div class="homePreviewDescriptionContainer">
-                                <div class="homePreviewDescription"><%= article.description %></div>
-                            </div>
-                            <div class="previewLinkContainer">
-                                <a class="homePreviewLink" href="articles/<%= article.slug %>">read »</a>
+                    <% articles.forEach(article => { %>
+                        <div class="previewContainer">
+                            <div class="visiblePreview">
+                                <div class="previewImageContainer">
+                                    <a href="articles/<%= article.slug %>">
+                                        <img src="<%= article.thumbnail %>" alt="thumbnail not found"  class="previewImage">
+                                    </a>
+                                </div>
+                                <div class="previewContentContainer">
+                                    <div class="previewContent">
+                                        <div class="previewArtist"><%= article.artist %></div>
+                                        <div class="previewInterviewer"><%= article.interviewer %></div>
+                                        <div class="previewDate"><%= article.createdAt %></div>
+                                        <div class="previewLinkContainer">
+                                            <a class="previewLink" href="<%= article.slug %>">read »</a>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                        <div class="homeDivider"></div>
                     <% }); %> 
 				</div>
 			</main>
@@ -61,9 +65,7 @@
 			</div>
 		</div>
         <script>
-            
-            // TODO FIX ME PLEASE!
-            // let a = articles;
+            let a = this.articles;
 
             // search string
             let searchString = "";
@@ -81,7 +83,7 @@
                 this.interviewer = data.interviewer;
                 this.date = data.createdAt;
                 this.imageUrl = data.thumbnail;
-                this.url = "articles/" + data.slug;
+                this.url = "/articles/" + data.slug;
                 this.tags = data.tags.split("~~~");
                 this.visible = visible;
                 }
@@ -137,26 +139,21 @@
             // add event listener 
             document.getElementById("searchBar").addEventListener("input", handleSearch);
 
-            // communication w/ backend -----------------------------------------------------
-
             /**
-             * WILL: loads all previews from the server
-             * ACTUALY DOES: loads fake previews for testing
+             * WILL: loads all previews
              */
             function loadPreviews() {
-                previews = sortPreviews(a.map(p => makePreview(p)));
-                writePreviews()
-                // fetch(url)
-                //     .then(res => res.json())
-                //     .then(data => {
-                //        previews = sortPreviews(data.previews.map(p => makePreview(p)));
-                //         writePreviews();
-                //     }).catch(err => {
-                //         console.log(err)
-                //     });
+                previews = sortPreviews(getPreviews().map(p => makePreview(p)));
+                writePreviews()    
             }
 
-            // helper functions -------------------------------------------------------------
+             /**
+             * WILL: gets previews from page text
+             */
+            function getPreviews() {
+                let 
+
+            }
 
             /**
              * makes a Preview from the data recieved from the server
