@@ -99,7 +99,7 @@ router.get('/about', (req, res) => {
     res.render('articles/about', { article: new Article() })
 });
 
-router.get('/new', (req, res) => {
+router.get('/new', checkAuthenticated, (req, res) => {
     res.render('articles/new', { article: new Article() })
 });
 
@@ -110,7 +110,7 @@ router.get('/archive', async (req, res) => {
     res.render('articles/archive', { articles });
 });
 
-router.get('/view', async (req, res) => {
+router.get('/view', checkAuthenticated, async (req, res) => {
   const articles = await Article.find().sort({
       createdAt: 'desc'
   });
