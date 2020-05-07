@@ -115,11 +115,11 @@ router.get('/archive', async (req, res) => {
     res.render('articles/archive', { articles });
 });
 
-router.get('/archiveAdmin', async (req, res) => {
+router.get('/view', async (req, res) => {
   const articles = await Article.find().sort({
       createdAt: 'desc'
   });
-  res.render('articles/archiveAdmin', { articles });
+  res.render('articles/view', { articles });
 });
 
 
@@ -155,7 +155,7 @@ router.put('/:id', async (req, res, next) => {
 
 router.delete('/:id', async (req, res) => {
     await Article.findByIdAndDelete(req.params.id);
-    res.redirect('/');
+    res.redirect('/articles/view');
 })
 
 function hashPassword(password){ return require('crypto').createHash('sha256').update(password, 'utf8').digest('hex');

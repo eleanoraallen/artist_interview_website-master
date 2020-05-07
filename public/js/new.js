@@ -1,157 +1,3 @@
-const contentArr = [];
-const typeArr = []
-const contentList = document.getElementById('contentList');
-const title = document.getElementById('title');
-const description = document.getElementById('description');
-
-
-
-document.getElementById("addText").addEventListener("click", function(event) {
-    //event.preventDefault();
-
-    const temp = {
-        text: "",
-        html: getMarkdownHtml(""),
-    }
-
-    //console.log('test');
-    contentArr.push(temp);
-    typeArr.push('markdown');
-    saveContent();
-    outputContent();
-});
-
-document.getElementById("addQuestion").addEventListener("click", function(event) {
-    //event.preventDefault();
-
-    const temp = {
-        text: "",
-        html: getQuestionHtml(""),
-    }
-
-    //console.log('test');
-    contentArr.push(temp);
-    typeArr.push('question');
-    saveContent();
-    outputContent();
-});
-
-
-document.getElementById("addImage").addEventListener("click", function(event) {
-    //event.preventDefault();
-
-    const temp = {
-        text: "",
-        html: getImageHtml(""),
-    }
-
-    //console.log('test');
-    contentArr.push(temp);
-    typeArr.push('image');
-    saveContent();
-    outputContent();
-});
-
-function saveContent(){
-    let inputList = contentList.getElementsByClassName('form-control');
-
-    inputList = Array.from(inputList).map(e => e.value);
-
-    for(let i = 0; i < inputList.length; i++){
-        contentArr[i].text = inputList[i];
-        if(typeArr[i] === 'markdown'){
-            contentArr[i].html = getMarkdownHtml(inputList[i]);
-        } else if(typeArr[i] === 'question') {
-            contentArr[i].html = getQuestionHtml(inputList[i]);
-        } else {
-            contentArr[i].html = getImageHtml(inputList[i]);
-        }
-    }
-}
-
-function outputContent(){
-    contentList.innerHTML = '';
-    contentArr.forEach(element => {
-        contentList.innerHTML += element.html;
-    });
-}
-
-function getMarkdownHtml(text){
-    return `
-    <li class="list-group-item">
-        <div class="form-group">
-            <label >Answer</label>
-            <textarea required name="content[]"  class="form-control">${text}</textarea>
-            <input name="type[]" type="hidden" class="type-control" value="markdown">
-        </div>
-        <a onclick="deleteContent(this)" class="btn btn-danger text-white">Delete</a>
-    </li>
-    `;
-}
-
-function getQuestionHtml(text){
-    return `
-    <li class="list-group-item">
-        <div class="form-group">
-            <label >Question</label>
-            <textarea required name="content[]"  class="form-control">${text}</textarea>
-            <input name="type[]" type="hidden" class="type-control" value="question">
-        </div>
-        <a onclick="deleteContent(this)" class="btn btn-danger text-white">Delete</a>
-    </li>
-    `;
-}
-
-function getImageHtml(text){
-    return `
-    <li class="list-group-item">
-        <div class="form-group">
-            <label >Image Link</label>
-            <input type="url" class="form-control" name="content[]" value ="${text}" placeholder="Enter image link">
-            <input name="type[]" type="hidden" value="image">
-        </div>
-        <a onclick="deleteContent(this)" class="btn btn-danger text-white">Delete</a>
-    </li>
-    `;
-}
-
-function deleteContent(sender){ 
-    saveContent();
-    const aElements = contentList.getElementsByTagName("a");
-
-    const aElementsLength = aElements.length;
-
-    var index;
-    for (var i = 0; i < aElementsLength; i++)
-    {
-        if (aElements[i] == sender) 
-        {
-            index = i;
-            break;
-        }
-    }
-
-    // Delete from database
-    contentArr.splice(index, 1);
-    typeArr.splice(index, 1);
-    outputContent();
-}
-
-
-
-
-
-
-function appendInput(form, key, value){ // not used
-    const hiddenField = document.createElement('input');
-    hiddenField.type = 'hidden';
-    hiddenField.name = key;
-    hiddenField.value = value;
-    form.appendChild(hiddenField);
-
-}
-
-
 /**
  * adds an artest statement to the document
  */
@@ -364,7 +210,6 @@ function publish() {
         let m = "There seems to be a problem with your interview. Please fix the following issue(s):";
         e.forEach(s => m = m + s);
         alert(m);
-        console.log("returned false")
         return false;
     } else {
         let confirmation = confirm("Please confirm that you want to publish this.");
@@ -385,7 +230,6 @@ function publish() {
             document.getElementById('caption').value = imageTitle;
             document.getElementById('tags').value = "" + String(tags.reduce((x,y) => x + "~~~" + y));
             document.getElementById('pageHtml').value = html;
-            console.log("returned true")
             return true;
         } else {
             return false;

@@ -11,13 +11,12 @@
 		<a id='skipLink' href='#contentContainer'>Jump to main</a>
 		<div class=pageContent>
 			<div class="header">
-				<div class="logoContainer"><a href="/articles/index" class="logoLink">/ Variables</a></div>
+				<div class="logoContainer"><a href="/articles/index" class="logoLink">/ [Admin]</a></div>
 				<div class="navContainer" role="navigation">
 					<nav>
-						<a class="navLink currentNavLink" href="/articles/about">About</a>
-						<a class="navLink" href="/articles/archive">Archive</a>
-						<a class="navLink" href="/articles/contact">Contact</a>
-					</nav>
+                        <a class="navLink" href="/articles/new"> New Interview </a>
+                        <a class="navLink" href="/articles/view"> Remove Interviews </a>
+                    </nav>
 				</div>
 				<div class="spaceDiv"></div>
 			</div>
@@ -103,53 +102,15 @@
                         type="text" name="pageHtml" id="pageHtml"
                         class="form-control" placeholder="pagehtml">
                     </div>
-                    <div class="form-group invisible">
-                        <ul class="list-group" id="contentList">
-                        </ul>
-                    </div>
-                    <a href="/" class="btn btn-secondary invisible">Cancel</a>
                     <button type="submit" id="publishButton" class="adminButton" onclick="publish()" class="btn btn-primary">Publish</button>
                 </form>
-                <div class="">
-                    <div class="form-group invisible">
-                        <button id="addQuestion" class="btn btn-success">Add Question</button> 
-                        <button id="addText" class="btn btn-success">Add Answer</button> 
-                        
-                        <button id="addImage" type="submit"  class="btn btn-info">Add Image</button>
-                </div>
             </div>
         </div>
     </div>
 
-    
-    <script
-    src="https://code.jquery.com/jquery-3.2.1.min.js"
-    integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
-    crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"
+    integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
-
     <script src="/js/new.js"></script>
-    <script>
-        let text;
-        let type;
-        let dict;
-        <% for(let i = 0; i < article.content.length; i++) { %>
-            text = "<%= article.content[i]  %>";
-            type = "<%= article.types[i] %>";
-            dict = {};
-            dict.text = text;
-            if (type === 'markdown'){
-                dict.html = getMarkdownHtml(text);
-            } else if(type === 'question') {
-                dict.html = getQuestionHtml(text);
-            } else {
-                dict.html = getImageHtml(text);
-            }
-            contentArr.push(dict);
-            typeArr.push(type);
-        <% } %> 
-    saveContent();
-    outputContent();
-    </script>
 </body>
 </html>

@@ -1,14 +1,43 @@
-<h1>Login</h1>
-<form action="/articles/login" method="POST">
-        
-    <h1><%= messages.error ? messages.error : '' %></h1>
-    <div>
-      <label for="email">Email</label>
-      <input type="email" id="email" name="email" required>
-    </div>
-    <div>
-      <label for="password">Password</label>
-      <input type="password" id="password" name="password" required>
-    </div>
-    <button type="submit">Login</button>
-  </form>
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<title>Create Interview</title>
+		<link rel="stylesheet" href="/css/webfonts/ingram-mono-regular.css" type="text/css" charset="utf-8" />
+		<link rel="stylesheet" type="text/css" href="/css/style.css" />
+		<link rel="stylesheet" type="text/css" href="/css/admin.css" />
+	</head>
+	<body>
+		<a id='skipLink' href='#contentContainer'>Jump to main</a>
+		<div class=pageContent>
+			<div class="header">
+                <div class="logoContainer"><a href="/articles/index" class="logoLink">/ [Admin]</a></div>
+                <div class="navContainer" role="navigation">
+                    <nav>
+                    </nav>
+            </div>
+        </div>
+      <main>
+        <div id="contentContainer" role="main">
+          <div class="elementContainer"></div>
+          <div class="elementContainer"></div>
+          <div id="adminTitle" class="elementContainer">Please Login</div>
+          <form action="/articles/login" method="POST">   
+            <h1><%= messages.error ? messages.error : '' %></h1>
+            <div class="elementContainer">
+              <input type="email" class="inputBar" id="email" name="email" placeholder="email" required>
+            </div>
+            <div>
+              <div class="elementContainer">
+                <input type="password" class="inputBar" id="password" name="password" placeholder="password" required>
+              </div>
+            </div>
+            <div class="elementContainer">
+              <button type="submit" class="adminButton">Login</button>
+            </div>
+          </form>
+        </div>
+      </main>
+      </div>
+</body>
+</html>
