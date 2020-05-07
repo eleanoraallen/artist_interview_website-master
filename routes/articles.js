@@ -115,6 +115,13 @@ router.get('/archive', async (req, res) => {
     res.render('articles/archive', { articles });
 });
 
+router.get('/archiveAdmin', async (req, res) => {
+  const articles = await Article.find().sort({
+      createdAt: 'desc'
+  });
+  res.render('articles/archiveAdmin', { articles });
+});
+
 
 
 router.get('/:slug', async (req, res) =>{

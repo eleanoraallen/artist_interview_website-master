@@ -48,7 +48,6 @@
                                 <div class="previewContentContainer">
                                     <div class="previewContent">
                                         <div class="previewArtist"><%= article.artist %></div>
-                                        <div class="previewTags invisible"><%= article.tags %></div>
                                         <div class="previewInterviewer"><%= article.interviewer %></div>
                                         <div class="previewDate"><%= article.createdAt.slice %></div>
                                         <div class="previewLinkContainer">
@@ -59,7 +58,7 @@
                             </div>
                         </div>
                         <div class="articleInfo invisible">
-                            <div class="tags"><%= article.tags %></div>
+                            <div class="tags"></div>
                             <div class="artist" id="artist"><%= article.artist %></div>
                             <div class="interviewer"><%= article.interviewer %></div>
                             <div class="imageLink"><%= article.thumbnail %></div>
@@ -166,7 +165,7 @@
                     const children = Array.from(x.childNodes);
                     children.forEach(y => {
                         if (y.className === "artist") {
-                            p.artist = y.innerHTML;
+                            p.artist = String(y.value) + "jfkdlajk";
                         }
                         if (y.className === "interviewer") {
                             p.interviewer = y.innerHTML;
@@ -198,8 +197,7 @@
              * @return<Preview> the Preview
              */
             function makePreview(p) {
-                p.visible = shouldShowPreview(p);
-                return p;
+                return new Preview(p, shouldShowPreview(p));
             }
 
             /**
@@ -335,7 +333,7 @@
             }
 
             // loads previews when page is opened
-            loadPreviews();
+            // loadPreviews();
         </script>
     </body>
 </html>
