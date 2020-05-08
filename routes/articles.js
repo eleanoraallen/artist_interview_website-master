@@ -62,14 +62,38 @@ router.get('/admin',  checkAuthenticated, (req, res) => { //
     res.render('articles/admin');
   });
 
+router.get('/change', checkAuthenticated, (req, res) => {
+  res.render('articles/change', { message : '' });
+});
+
+router.post('/change', checkAuthenticated, async (req, res) => { // 
+  const oldpassword = req.body.oldpassword;
+  const newpassword = req.body.newpassword;
+  const repeatpassword = req.body.repeatpassword;
+
+  if(hashedPassword !== hashPassword(oldpassword)){
+    res.render('articles/change', { message : 'Incorrect password entered!' });
+  } else if(newpassword !== repeatpassword) {
+    res.render('articles/change', { message : 'New password does not match!' });
+  } else {
+    hashedPassword = hashPassword(newpassword);
+    res.render('articles/admin');
+  }
+  
+  isAdmin = hashedPassword === hashPassword(enteredPassword);
+  //console.log('isAdmin = ' + isAdmin);
+  res.redirect('/articles/admin');
+
+});
+
 
 router.post('/login', checkNotAuthenticated, async (req, res) => { // 
-    console.log('Login body:');
-    console.log(req.body);
+    //console.log('Login body:');
+    //console.log(req.body);
     let enteredPassword = req.body.password;
     
     isAdmin = hashedPassword === hashPassword(enteredPassword);
-    console.log('isAdmin = ' + isAdmin);
+    //console.log('isAdmin = ' + isAdmin);
     res.redirect('/articles/admin');
 
   });
@@ -141,20 +165,33 @@ router.post('/', async (req, res, next) => {
 }, saveArticleAndRedirect('new'));
 
 router.put('/:id', async (req, res, next) => {
+  try{
     req.article = await Article.findById(req.params.id);
     next();
+  } catch (error) {
+    console.log('Couldnt find article' + error);
+    res.redirect('/');
+  }
+
      
  }, saveArticleAndRedirect('/'));
 
+
+ router.delete('/logout', async (req, res) => {
+  //console.log('delete is catched');
+  isAdmin = false;
+  await res.redirect('/articles/login')
+});
 
 
 router.delete('/:id', async (req, res) => {
     await Article.findByIdAndDelete(req.params.id);
     res.redirect('/articles/view');
-})
+});
 
-function hashPassword(password){ return require('crypto').createHash('sha256').update(password, 'utf8').digest('hex');
-}
+
+
+function hashPassword(password){ return require('crypto').createHash('sha256').update(password, 'utf8').digest('hex'); }
 
 function saveArticleAndRedirect(path) {
     return async (req, res) => {
@@ -184,11 +221,7 @@ function saveArticleAndRedirect(path) {
 }
 
 
-router.delete('/logout', (req, res) => {
-    console.log('delete is catched');
-    isAdmin = false;
-    res.redirect('/login')
-  })
+
 
 function checkAuthenticated(req, res, next) {
     if (isAuthenticated()) {

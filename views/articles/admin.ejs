@@ -23,13 +23,21 @@
           <div class="contentContainer" role="main">
             <div class="elementContainer"></div>
             <div class="elementContainer"></div>
-            <div id="adminTitle" class="elementContainer">Login Successful!</div>
+            <div id="adminTitle" class="elementContainer">Welcome Admin!</div>
+            <h1><%= messages.msg ? messages.msg : '' %></h1>
             <div class="elementContainer"></div>
             <div class="elementContainer"></div>
             <div class="elementContainer interviewButtonContainer">
                 <a href="/articles/new"><button class="adminButton interviewButton" >Add an Interview</button></a>
                 <a href="/articles/view"><button class="adminButton interviewButton" >Remove Interviews</button></a>
+                <a href="/articles/change"><button class="adminButton interviewButton" >Change Password</button></a>
             </div>
+            <div class="elementContainer interviewButtonContainer">
+                <form action="/articles/logout?_method=DELETE" method="POST" >
+                    <button type="submit" class="adminButton interviewButton">Log Out</button>
+                </form>
+            </div>
+
           </div>
       </main>
       </div>
