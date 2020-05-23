@@ -2,12 +2,14 @@
 <html lang="en">
 	<head>
 		<meta charset="utf-8">
-		<title>Create Interview</title>
+		<title>Edit Interview</title>
 		<link rel="stylesheet" href="/css/webfonts/ingram-mono-regular.css" type="text/css" charset="utf-8" />
 		<link rel="stylesheet" type="text/css" href="/css/style.css" />
 		<link rel="stylesheet" type="text/css" href="/css/admin.css" />
 	</head>
 	<body>
+        <div id="HtmlContainer"><%- article.pageHtml %></div>
+        <div id="TagContainer"><%= article.tags  %></div>
 		<a id='skipLink' href='#contentContainer'>Jump to main</a>
 		<div class=pageContent>
 			<div class="header">
@@ -20,7 +22,7 @@
                 </div>
             </div>
     <div id="contentContainer" role="main">
-        <div id="adminTitle" class="elementContainer">Create an Interview</div>
+        <div id="adminTitle" class="elementContainer">Edit an Interview</div>
         <div class="adminSeperator"></div>
         <div id="basicInfoContainer">
             <div id="artistContainer" class="elementContainer">
@@ -65,7 +67,7 @@
         <div id="endButtonContainer" class="elementContainer">
             <button class="adminButton" id="previewButton" onclick="showPreview()">Preview</button>
             <div class="container">
-                <form id="submitForm" action="/articles" method="POST">
+                <form id="submitForm" action="/articles/<%= article.id  %>?_method=PUT" method="POST">
                     <div class="form-group invisible">
                         <input required value="<%= article.artist  %>"
                         type="text" name="artist" id="artist"
@@ -110,6 +112,6 @@
     <script src="https://code.jquery.com/jquery-3.2.1.min.js"
     integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
-    <script src="/js/new.js"></script>
+    <script src="/js/edit.js"></script>
 </body>
 </html>

@@ -141,6 +141,11 @@ router.get('/view', checkAuthenticated, async (req, res) => {
   res.render('articles/view', { articles });
 });
 
+router.get('/edit/:id', async (req, res) => {
+  const article = await Article.findById(req.params.id);
+  res.render('articles/edit', { article: article });
+});
+
 
 
 router.get('/:slug', async (req, res) =>{

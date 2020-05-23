@@ -115,19 +115,39 @@
   text-decoration: underline;
 }
 
-#deleteButton {
+.deleteButton {
   background-color: red;
   font-family: 'IngramMono-Regular', Helvetica, Arial, Sans-Serif;
   padding-top: 5px;
   padding-bottom: 5px;
-  padding-left: 10px;
-  padding-right: 10px;
+  width: 100px;
   font-size: 10pt;
   outline: none;
   border: none;
 }
-#deleteButton:hover {
+.deleteButton:hover {
   background-color: rgb(150, 11, 11);
+}
+
+.editButton {
+  background-color: green;
+  font-family: 'IngramMono-Regular', Helvetica, Arial, Sans-Serif;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  width: 100px;
+  font-size: 10pt;
+  outline: none;
+  border: none;
+  margin-bottom: 15px;
+}
+.editButton:hover {
+  background-color: rgb(0, 83, 0);
+}
+
+.viewButtonContainer {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
 }
 
   /* Tablet/Mobile Style */

@@ -11,16 +11,16 @@
         <div class="pageContent">
             <a id='skipLink' href='#contentContainer'>Jump to main</a>
             <div class="header">
-                <div class="logoContainer"><a href="/articles/index" class="logoLink">/ [Admin]</a></div>
+                <div class="logoContainer"><a href="/articles/admin" class="logoLink">/ [Admin]</a></div>
                 <div class="navContainer" role="navigation">
                     <nav>
                         <a class="navLink" href="/articles/new"> New Interview </a>
-                        <a class="navLink" href="/articles/view"> Remove Interviews </a>
+                        <a class="navLink" href="/articles/view"> Edit or Remove Interviews </a>
                     </nav>
                 </div>
                 <div class="spaceDiv"></div>
             </div>
-            <div class="sortContainer"><div id="adminTitle">Remove Interviews</div></div>
+            <div class="sortContainer"><div id="adminTitle">Edit or Remove Interviews</div></div>
 			<main>
 				<div id="contentContainer" role="main">
                     <% articles.forEach(article => { %>
@@ -37,9 +37,12 @@
                                         <div class="previewTags invisible"><%= article.tags %></div>
                                         <div class="previewInterviewer"><%= article.interviewer %></div>
                                         <div class="previewDate"><%= article.createdAt %></div>
-                                        <form action="/articles/<%= article.id %>?_method=DELETE" method="POST" class="d-inline">
-                                            <button type="submit" id="deleteButton">Delete</button>
-                                        </form>
+                                        <div class="viewButtonContainer">
+                                            <a href="/articles/edit/<%= article.id %>" ><button class="editButton">Edit</button></a>
+                                            <form action="/articles/<%= article.id %>?_method=DELETE" method="POST" class="d-inline">
+                                                <button type="submit" class="deleteButton">Delete</button>
+                                            </form>
+                                        </div>
                                     </div>
                                 </div>
                             </div>

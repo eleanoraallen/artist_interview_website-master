@@ -1,7 +1,114 @@
+const page = document.getElementById("HtmlContainer");
+
+const pageArtist = String(page.getElementsByClassName('interviewArtist')[0].innerHTML);
+document.getElementById('artistInput').value = pageArtist;
+
+const pageInterviewer = String(page.getElementsByClassName('interviewInterviewer')[0].innerHTML);
+document.getElementById('interviewerInput').value = pageInterviewer;
+
+const pageThumbnail = String(page.getElementsByClassName('interviewImage')[0].src);
+document.getElementById('previewImageSource').value = pageThumbnail;
+
+const pageThumbnailAlt = String(page.getElementsByClassName('interviewImage')[0].alt);
+document.getElementById('previewImageAlt').value = pageThumbnailAlt;
+
+const pageThumbnailCaption = String(page.getElementsByClassName('interviewImageTitle')[0].innerHTML);
+document.getElementById('previewImageCaption').value = pageThumbnailCaption;
+
+const pageDescription = String(page.getElementsByClassName('interviewDescription')[0].innerHTML);
+document.getElementById('descriptionInput').value = pageDescription;
+
+const elems = Array.from(document.getElementById('contentContainer').childNodes);
+
+let i = 0;
+let seenPreview = false;
+
+while (i < elems.length) {
+    if (elems[i].className == 'interviewQuestion') {
+        addInterviewer(elems[i].innerHTML);
+    }
+    if (elems[i].className == 'interviewAnswer') {
+        addArtist(elems[i].innerHTML);
+    }
+    if (elems[i].className !== undefined && elems[i].className.includes('interviewAudioContainer')) {
+        let src = String(elems[i].firstChild.childNodes[1].src);
+        let alt = getAlt(i);
+        let cap = getCap(i);
+        addAudio(src, alt, cap);
+    }
+    if (elems[i].className !== undefined && elems[i].className.includes('interviewVideoIframeContainer')) {
+        let src = String(elems[i].firstChild.src);
+        let alt = getAlt(i);
+        let cap = getCap(i);
+        addVideo(src, alt, cap);
+    }
+    if (elems[i].className !== undefined && elems[i].className.includes('interviewVideoContainer')) {
+        let src = String(elems[i].firstChild.childNodes[1].src);
+        let alt = getAlt(i);
+        let cap = getCap(i);
+        addVideo(src, alt, cap);
+    }
+    if (elems[i].className !== undefined && elems[i].className.includes('interviewImageContainer')) {
+        if (seenPreview) {
+            let src = String(elems[i].firstChild.src);
+            let alt = String(elems[i].firstChild.alt);;
+            let cap = getCap(i);
+            addImage(src, alt, cap);
+        } else {
+            seenPreview = true;
+        }
+    }
+    if (elems[i].className !== undefined && elems[i].className.includes('embedContainer')) {
+        let src = String(elems[i].firstChild.innerHTML);
+        let alt = String(elems[i].childNodes[1].innerHTML);;
+        let cap = getCap(i);
+        addEmbed(src, alt, cap);
+    }
+    i++;
+}
+
+document.getElementById("HtmlContainer").innerHTML = '';
+
+
+function getAlt(i) {
+    let alt = '';
+    if (elems[i+2] !== undefined && elems[i+2].className == 'interviewMediaAlt') {
+        alt = String(elems[i+2].innerHTML);
+        alt = ''
+    }
+    if (elems[i+1] !== undefined && elems[i+1].className == 'interviewMediaAlt') {
+        alt = String(elems[i+1].innerHTML);
+        alt = ''
+    }
+    return alt;
+}
+
+function getCap(i) {
+    let cap = '';
+    if (elems[i+3] !== undefined && elems[i+3].className == 'interviewImageTitle') {
+        cap = String(elems[i+3].innerHTML);
+    }
+    if (elems[i+2] !== undefined && elems[i+2].className == 'interviewImageTitle') {
+        cap = String(elems[i+2].innerHTML);
+    }
+    if (elems[i+1] !== undefined && elems[i+1].className == 'interviewImageTitle') {
+        cap = String(elems[i+1].innerHTML);
+    }
+    return cap;
+}
+
+
+
+// add tags
+const tags = document.getElementById("TagContainer").innerHTML.split('~~~').filter(x => x !== '');
+tags.forEach(t => addTag(t));
+document.getElementById("TagContainer").innerHTML = '';
+
+
 /**
  * adds an artest statement to the document
  */
-function addArtist() {
+function addArtist(t) {
     let artistID = Math.floor(Math.random() * 1000000000);
     let container = document.createElement('div');
     container.id = `artist${artistID}`;
@@ -9,6 +116,9 @@ function addArtist() {
     let field = document.createElement('textarea');
     field.className="inputField artistField interviewElement";
     field.placeholder="enter artist statement";
+    if (t !== undefined) {
+        field.value = t;
+    }
     let button = document.createElement('button');
     button.className = "removeButton";
     button.innerHTML = "X";
@@ -22,7 +132,7 @@ function addArtist() {
 /**
  * adds an interviewer statement to the document
  */
-function addInterviewer() {
+function addInterviewer(t) {
     let interviewerID = Math.floor(Math.random() * 1000000000);
     let container = document.createElement('div');
     container.id = `interviewer${interviewerID}`;
@@ -30,6 +140,9 @@ function addInterviewer() {
     let field = document.createElement('textarea');
     field.className="inputField interviewerField interviewElement";
     field.placeholder="enter interviewer statement";
+    if (t !== undefined) {
+        field.value = t;
+    }
     let button = document.createElement('button');
     button.className = "removeButton";
     button.innerHTML = "X";
@@ -43,7 +156,7 @@ function addInterviewer() {
 /**
  * adds an image input to the document
  */
-function addImage() {
+function addImage(t, a, c) {
     let imageID = Math.floor(Math.random() * 1000000000);
     let container = document.createElement('div');
     container.id = `image${imageID}`;
@@ -53,12 +166,21 @@ function addImage() {
     let srcInput = document.createElement('input');
     srcInput.className="inputBar srcInput";
     srcInput.placeholder="enter image url";
+    if (t !== undefined) {
+        srcInput.value = t;
+    }
     let captionInput = document.createElement('input');
     captionInput.className="inputBar captionInput";
     captionInput.placeholder="enter image caption";
+    if (c !== undefined) {
+        captionInput.value = c;
+    }
     let altInput = document.createElement('input');
     altInput.className="inputBar altInput";
     altInput.placeholder="enter image alternant text";
+    if (a !== undefined) {
+        altInput.value = a;
+    }
     inputContainer.appendChild(srcInput);
     inputContainer.appendChild(captionInput);
     inputContainer.appendChild(altInput);
@@ -75,7 +197,7 @@ function addImage() {
 /**
  * adds an audio input to the document
  */
-function addAudio() {
+function addAudio(t, a, c) {
     let audioID = Math.floor(Math.random() * 1000000000);
     let container = document.createElement('div');
     container.id = `audio${audioID}`;
@@ -85,12 +207,21 @@ function addAudio() {
     let srcInput = document.createElement('input');
     srcInput.className="inputBar srcInput";
     srcInput.placeholder="enter share link or .mp3 .ogg or .wav file";
+    if (t !== undefined) {
+        srcInput.value = t;
+    }
     let captionInput = document.createElement('input');
     captionInput.className="inputBar captionInput";
     captionInput.placeholder="enter audio caption";
+    if (c !== undefined) {
+        captionInput.value = c;
+    }
     let altInput = document.createElement('input');
     altInput.className="inputBar altInput";
     altInput.placeholder="enter audio alternant text";
+    if (a !== undefined) {
+        altInput.value = a;
+    }
     inputContainer.appendChild(srcInput);
     inputContainer.appendChild(captionInput);
     inputContainer.appendChild(altInput);
@@ -107,7 +238,7 @@ function addAudio() {
 /**
  * adds a video input to the document
  */
-function addVideo() {
+function addVideo(t, a, c) {
     let videoID = Math.floor(Math.random() * 1000000000);
     let container = document.createElement('div');
     container.id = `video${videoID}`;
@@ -117,12 +248,21 @@ function addVideo() {
     let srcInput = document.createElement('input');
     srcInput.className="inputBar srcInput";
     srcInput.placeholder="enter share link, embed link, or .mp4 .ogg or .webm file";
+    if (t !== undefined) {
+        srcInput.value = t;
+    }
     let captionInput = document.createElement('input');
     captionInput.className="inputBar captionInput";
     captionInput.placeholder="enter video caption";
+    if (c !== undefined) {
+        captionInput.value = c;
+    }
     let altInput = document.createElement('input');
     altInput.className="inputBar altInput";
     altInput.placeholder="enter video alternant text";
+    if (a !== undefined) {
+        altInput.value = a;
+    }
     inputContainer.appendChild(srcInput);
     inputContainer.appendChild(captionInput);
     inputContainer.appendChild(altInput);
@@ -139,7 +279,7 @@ function addVideo() {
 /**
  * adds an embed input to the document
  */
-function addEmbed() {
+function addEmbed(t, a, c) {
     let embedID = Math.floor(Math.random() * 1000000000);
     let container = document.createElement('div');
     container.id = `embed${embedID}`;
@@ -149,12 +289,21 @@ function addEmbed() {
     let field = document.createElement('textarea');
     field.className="inputField embedField interviewField";
     field.placeholder="enter HTML";
+    if (t !== undefined) {
+        field.value = t;
+    }
     let captionInput = document.createElement('input');
     captionInput.className="inputBar embedInput captionInput";
     captionInput.placeholder="enter embed caption";
+    if (c !== undefined) {
+        captionInput.value = c;
+    }
     let altInput = document.createElement('input');
     altInput.className="inputBar embedInput altInput";
     altInput.placeholder="enter embed alternant text";
+    if (a !== undefined) {
+        altInput.value = a;
+    }
     inputContainer.appendChild(field);
     inputContainer.appendChild(captionInput);
     inputContainer.appendChild(altInput);
@@ -171,7 +320,7 @@ function addEmbed() {
 /**
  * adds a tag to the document
  */
-function addTag() {
+function addTag(t) {
     let tagID = Math.floor(Math.random() * 1000000000);
     let container = document.createElement('div');
     container.id = `tag${tagID}`;
@@ -179,6 +328,9 @@ function addTag() {
     let field = document.createElement('input');
     field.className="inputBar tagInput";
     field.placeholder="enter tag";
+    if (t !== undefined) {
+        field.value = t;
+    }
     let button = document.createElement('button');
     button.className = "removeButton";
     button.innerHTML = "X";
@@ -443,4 +595,3 @@ function getHTML() {
 
     return h;
 }
-

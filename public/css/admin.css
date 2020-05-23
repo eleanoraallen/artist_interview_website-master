@@ -156,3 +156,11 @@
 #publishButton:hover {
     background-color: rgb(34, 104, 34);  
 }
+
+#HtmlContainer {
+    display: none;
+  }
+
+#TagContainer {
+    display: none;
+  }
