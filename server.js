@@ -17,7 +17,7 @@ const app = express();
 const mongoose = require('mongoose');
 const Article = require('./models/article');
 const db = mongoose.connection;
-const url = "mongodb+srv://admin:admin@sugardevdb-hoj4n.mongodb.net/test?retryWrites=true&w=majority";
+const url = "mongodb+srv://frontEnd:svUmVlF9gl1ctINB@variables-cluster-ph61p.mongodb.net/test?retryWrites=true&w=majority";
 
 
 db.on('error', console.error); // log any errors that occur

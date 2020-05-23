@@ -2,15 +2,11 @@ const express = require('express');
 const Article = require('./../models/article');
 const router = express.Router();
 
-
 const initializePassport = require('../passport-config')
 const bcrypt = require('bcrypt')
 const passport = require('passport')
 const flash = require('express-flash')
 const session = require('express-session')
-
-
-
 
 
 var isAdmin = false;
@@ -27,11 +23,7 @@ let admin = {
   }
 
 
-
   let hashedPassword = hashPassword(admin.password);
-  
-
-  
   
   admin = {
     id: Date.now().toString(),
@@ -55,8 +47,6 @@ router.use(session({
 }))
 router.use(passport.initialize())
 router.use(passport.session())
-
-
 
 router.get('/admin',  checkAuthenticated, (req, res) => { // 
     res.render('articles/admin');
@@ -195,8 +185,8 @@ router.delete('/:id', async (req, res) => {
 });
 
 
-
 function hashPassword(password){ return require('crypto').createHash('sha256').update(password, 'utf8').digest('hex'); }
+
 
 function saveArticleAndRedirect(path) {
     return async (req, res) => {
@@ -225,9 +215,6 @@ function saveArticleAndRedirect(path) {
     }
 }
 
-
-
-
 function checkAuthenticated(req, res, next) {
     if (isAuthenticated()) {
         //console.log('checkAuthenticated passed')
@@ -237,14 +224,11 @@ function checkAuthenticated(req, res, next) {
     res.redirect('/articles/login');
   }
 
-
   function checkNotAuthenticated(req, res, next) {
     if (isAuthenticated()) {
       res.redirect('/articles/admin')
     }
     next()
   }
-
-
 
 module.exports = router;
