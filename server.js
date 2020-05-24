@@ -49,10 +49,6 @@ process.on('SIGINT', function() {
 
 //********** DATABASE CODE ENDS ***********/
 
-
-
-
-
 app.use(flash())
 app.use(session({
   secret: '1234', // process.env.SESSION_SECRET
@@ -83,6 +79,6 @@ app.get('/', async (req, res) => {
 const PORT = 5000;
 
 app.use('/articles', articleRouter);
-app.listen(PORT);
+app.listen(process.env.PORT || 5000);
 
 console.log(`Server running on localhost:${PORT}`);
