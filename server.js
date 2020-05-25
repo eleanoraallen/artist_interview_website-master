@@ -76,9 +76,9 @@ app.get('/', async (req, res) => {
     res.render('articles/', { articles });
 });
 
-const PORT = 5000;
+const PORT = 80;
 
 app.use('/articles', articleRouter);
-app.listen(process.env.PORT || 5000);
+app.listen(process.env.PORT || PORT);
 
-console.log(`Server running on localhost:${PORT}`);
+console.log(`Server running on localhost`);
