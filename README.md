@@ -2,11 +2,13 @@
 
 Run 'npm install' to install the node modules.
 
-Run 'npm run start' to run the server. The server runs on port 5000 by default.
+Run 'npm run start' to run the server.
 
 The website aims to host the interviews of artists. 
 
 
-Go to http://localhost:5000/articles/login to access the admin portal. The password is 'admin' by default but it can be changed from the admin panel.
+Go to http://localhost/articles/login to access the admin portal. The password is 'admin' by default but it can be changed from the admin panel.
 
-On the admin panel you can add new interviews, delete old ones and change the password.
+On the admin panel you can add edit and delete interviews, and change the password.
+
+IMPORTANT NOTE: the password will reset each time you relaunch the server!

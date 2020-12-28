@@ -105,23 +105,23 @@
   width: 695px;
 }
 
-  .interviewButton {
-      width: 275px;
-  }
+.interviewButton {
+    width: 275px;
+}
 
-  .interviewButtonContainer {
-      justify-content: space-evenly;
-  }
-  
-  .adminButton:hover {
+.interviewButtonContainer {
+    justify-content: space-evenly;
+}
+
+.adminButton:hover {
     background-color: rgb(228, 228, 228);
-  }
+}
 
-  #tagContainer {
-      flex-direction: column;
-  }
+#tagContainer {
+    flex-direction: column;
+}
 
-  .removeButton {
+.removeButton {
     font-family: 'IngramMono-Regular', Helvetica, Arial, Sans-Serif;
     background-color: rgb(223, 105, 105);
     padding-top: 5px;
@@ -131,26 +131,26 @@
     font-size: 14pt;
     outline: none;
     border: none;
-  }
+}
 
-  .removeButton:hover {
+.removeButton:hover {
     background-color: rgb(197, 51, 51);
-  }
+}
 
-  #endButtonContainer {
-      justify-content: space-evenly;
-      padding-bottom: 90px;
-  }
+#endButtonContainer {
+    justify-content: space-evenly;
+    padding-bottom: 90px;
+}
 
-  #previewButton {
-      background-color: gold;
-  }
+#previewButton {
+    background-color: gold;
+}
 
-  #previewButton:Hover {
+#previewButton:Hover {
     background-color: rgb(238, 202, 0);
 }
 
-  #publishButton {
+#publishButton {
     background-color: rgb(61, 150, 61);  
 }
 #publishButton:hover {
@@ -159,8 +159,8 @@
 
 #HtmlContainer {
     display: none;
-  }
+}
 
 #TagContainer {
     display: none;
-  }
+}
