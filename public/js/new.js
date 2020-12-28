@@ -314,7 +314,7 @@ function getErrors() {
 function getHTML() {
     let h = `<main><div id="contentContainer" role="main">`;
     h = h + `<div class="interviewArtist">${String(document.getElementById('artistInput').value)}</div>`;
-    h = h + `<div class="interviewInterviewer">${String(document.getElementById('interviewerInput').value)}</div>`;
+    h = h + `<div class="interviewInterviewer">interviewed by ${String(document.getElementById('interviewerInput').value)}</div>`;
     h = h + `<div class="interviewImageContainer"><img class="interviewImage" 
     src="${String(document.getElementById('previewImageSource').value)}"  
     alt="${String(document.getElementById('previewImageAlt').value)}"></div>`;

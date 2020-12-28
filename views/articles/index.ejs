@@ -17,7 +17,6 @@
                         <a class="navLink" href="/articles/about">About</a>
                         <a class="navLink" href="/articles/archive">Archive</a>
                         <a class="navLink" href="/articles/contact">Contact</a>
-                        <!-- <a class="navLink" href="/articles/new" >Admin</a> -->
                     </nav>
                 </div>
                 <div class="spaceDiv"></div>
@@ -26,9 +25,11 @@
                 <% articles.slice(0,3).forEach(article => { %>
                     <div class="homePreview">
                         <div class="homePreviewArtist"><%= article.artist %></div>
-                        <div class="homePreviewInterviewer">with <%= article.interviewer %></div>
+                        <div class="homePreviewInterviewer">interviewed by <%= article.interviewer %></div>
                         <div class="homePreviewImageContainer">
-                            <img src="<%= article.thumbnail %>" alt="thumbnail not found"  class="homePreviewImage">
+                            <a class="previewImageLink" href="articles/<%= article.slug %>">
+                                <img src="<%= article.thumbnail %>" alt="thumbnail not found"  class="homePreviewImage">
+                            </a>
                         </div>
                         <div class="homeImageTitle"><%= article.caption %></div>
                         <div class="homePreviewDescriptionContainer">
